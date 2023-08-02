@@ -47,6 +47,7 @@ namespace WebApplication8
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
