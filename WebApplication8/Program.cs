@@ -1,4 +1,5 @@
 using ASPSocialNetwork;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,15 @@ namespace WebApplication8
                 opts.Password.RequireDigit = false;
             })
                     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            var mapperConfig = new MapperConfiguration((v) =>
+            {
+                v.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+
+            builder.Services.AddSingleton(mapper);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -37,6 +47,7 @@ namespace WebApplication8
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
