@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication8.Models.Users;
 using WebApplication8.ViewModels.Account;
 
 namespace ASPSocialNetwork.Controllers

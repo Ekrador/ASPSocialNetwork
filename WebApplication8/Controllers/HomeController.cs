@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApplication8.Models;
+using WebApplication8.ViewModels.Account;
 
 namespace WebApplication8.Controllers
 {
@@ -15,7 +16,8 @@ namespace WebApplication8.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var homeViewModel = new HomeViewModel();
+            return View(homeViewModel);
         }
 
         public IActionResult Privacy()

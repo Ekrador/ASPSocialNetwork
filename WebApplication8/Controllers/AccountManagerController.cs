@@ -1,7 +1,7 @@
-﻿using ASPSocialNetwork;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication8.Models.Users;
 using WebApplication8.ViewModels.Account;
 
 namespace WebApplication8.Controllers
@@ -27,6 +27,12 @@ namespace WebApplication8.Controllers
             return View("Home/Login");
         }
 
+        [HttpGet]
+        public IActionResult Login(string returnUrl = null)
+        {
+            return View(new LoginViewModel { ReturnUrl = returnUrl });
+        }
+
         [Route("Login")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -40,14 +46,7 @@ namespace WebApplication8.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
