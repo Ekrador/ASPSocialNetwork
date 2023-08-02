@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ASPSocialNetwork
+namespace WebApplication8.Models.Users
 {
     public class User : IdentityUser
     {
@@ -8,7 +12,7 @@ namespace ASPSocialNetwork
 
         public string LastName { get; set; }
 
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         public DateTime BirthDate { get; set; }
     }

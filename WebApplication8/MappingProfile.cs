@@ -1,5 +1,5 @@
-﻿using ASPSocialNetwork;
-using AutoMapper;
+﻿using AutoMapper;
+using WebApplication8.Models.Users;
 using WebApplication8.ViewModels.Account;
 
 namespace WebApplication8

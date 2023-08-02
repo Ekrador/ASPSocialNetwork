@@ -1,16 +1,29 @@
-﻿@model WebApplication8.ViewModels.Account.RegisterViewModel
+﻿@using Microsoft.AspNetCore.Identity;
+@using WebApplication8.Models.Users;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager;
+@model WebApplication8.ViewModels.Account.HomeViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="row">
+@if (SignInManager.IsSignedIn(User))
+{
+<div>Hello @User.Identity!</div>
+}
+else{
+<div class="roww">
     <div class="side">
-        Описание самой клевой соцсети
+        <div class="center">
+            Пользуйтесь нашей самой крутой соцсетью! Регистрируйтесь всего за 2 минуты, делитесь мыслями, находите новых друзей.
+        </div>
+        <img class="main-img" src="http://pngimg.com/uploads/husky/husky_PNG19.png" />
     </div>
 
 
     <div class="main">
-        <partial name="Register" />
+        <partial name="Login" model="Model.LoginView" />
+        <partial name="Register" model="Model.RegisterView" />
     </div>
 
 </div>
+}
