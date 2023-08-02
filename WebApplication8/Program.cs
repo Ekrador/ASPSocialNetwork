@@ -2,6 +2,7 @@ using ASPSocialNetwork;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebApplication8.Models.Users;
 
 namespace WebApplication8
 {
