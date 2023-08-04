@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication8.Data.Repository;
 using WebApplication8.Extentions;
 using WebApplication8.Models.Users;
 using WebApplication8.ViewModels.Account;
+using WebApplication8.Data.UoW;
 
 namespace WebApplication8.Controllers
 {
@@ -14,12 +16,14 @@ namespace WebApplication8.Controllers
 
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private IUnitOfWork _unitOfWork;
 
-        public AccountManagerController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper)
+        public AccountManagerController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         [Route("Login")]
@@ -45,6 +49,7 @@ namespace WebApplication8.Controllers
             var result = await _userManager.GetUserAsync(user);
 
             var model = new UserViewModel(result);
+            model.Friends = await GetAllFriend(model.User);
 
             return View("User", model);
         }
@@ -91,13 +96,10 @@ namespace WebApplication8.Controllers
         }
 
         [Route("UserList")]
-        [HttpPost]
-        public IActionResult UserList(string search)
+        [HttpGet]
+        public async Task<IActionResult> UserList(string search)
         {
-            var model = new SearchViewModel
-            {
-                UserList = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().Contains(search.ToLower())).ToList()
-            };
+            var model = await CreateSearch(search);
             return View("UserList", model);
         }
 
@@ -121,7 +123,7 @@ namespace WebApplication8.Controllers
                     ModelState.AddModelError("", "Неправильный логин и (или) пароль");
                 }
             }
-            return View("Views/Home/Index.cshtml");
+            return RedirectToAction("Index", "Home");
         }
 
         [Route("Logout")]
@@ -131,6 +133,49 @@ namespace WebApplication8.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        private async Task<SearchViewModel> CreateSearch(string search)
+        {
+            var currentuser = User;
+
+            var result = await _userManager.GetUserAsync(currentuser);
+
+            var list = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().Contains(search.ToLower())).ToList();
+            var withfriend = await GetAllFriend();
+
+            var data = new List<UserWithFriendExt>();
+            list.ForEach(x =>
+            {
+                var t = _mapper.Map<UserWithFriendExt>(x);
+                t.IsFriendWithCurrent = withfriend.Where(y => y.Id == x.Id || x.Id == result.Id).Count() != 0;
+                data.Add(t);
+            });
+
+            var model = new SearchViewModel()
+            {
+                UserList = data
+            };
+
+            return model;
+        }
+
+        private async Task<List<User>> GetAllFriend()
+        {
+            var user = User;
+
+            var result = await _userManager.GetUserAsync(user);
+
+            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
+
+            return repository.GetFriendsByUser(result);
+        }
+
+        private async Task<List<User>> GetAllFriend(User user)
+        {
+            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
+
+            return repository.GetFriendsByUser(user);
         }
     }
 }
