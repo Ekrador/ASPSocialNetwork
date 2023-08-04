@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using WebApplication8.Models.Users;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+            <form class="form-inline" method="post" asp-controller="AccountManager" asp-action="Logout">
+        <button type="submit" class="nav-link btn btn-link text-dark"> Logout</button>
+            </form>
+    }
+   

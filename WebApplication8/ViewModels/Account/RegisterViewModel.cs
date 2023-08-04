@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApplication8.Models.ViewModels.Account
+namespace WebApplication8.ViewModels.Account
 {
     public class RegisterViewModel
     {
@@ -43,6 +43,6 @@ namespace WebApplication8.Models.ViewModels.Account
 
         [Required]
         [Display(Name = "Никнейм")]
-        public string Login { get; set; }
+        public string Login => EmailReg;
     }
 }
