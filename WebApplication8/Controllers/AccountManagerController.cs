@@ -96,7 +96,7 @@ namespace WebApplication8.Controllers
         {
             var model = new SearchViewModel
             {
-                UserList = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().Contains(search)).ToList()
+                UserList = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().Contains(search.ToLower())).ToList()
             };
             return View("UserList", model);
         }
