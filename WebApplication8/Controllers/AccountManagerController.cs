@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication8.Models.Users;
@@ -32,6 +33,21 @@ namespace WebApplication8.Controllers
         {
             return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
+
+        [Authorize]
+        [Route("MyPage")]
+        [HttpGet]
+        public async Task<IActionResult> MyPage()
+        {
+            var user = User;
+
+            var result = await _userManager.GetUserAsync(user);
+
+            var model = new UserViewModel(result);
+
+            return View("User", model);
+        }
+
 
         [Route("Login")]
         [HttpPost]

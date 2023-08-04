@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApplication8.Models;
+using WebApplication8.Models.Users;
 using WebApplication8.ViewModels.Account;
 
 namespace WebApplication8.Controllers
@@ -8,15 +10,23 @@ namespace WebApplication8.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<HomeController> logger)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
             var homeViewModel = new HomeViewModel();
+            if (_signInManager.IsSignedIn(User))
+            {
+                return Redirect("/Mypage");
+            }
             return View(homeViewModel);
         }
 
