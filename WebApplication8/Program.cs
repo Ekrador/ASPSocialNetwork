@@ -1,7 +1,10 @@
-using ASPSocialNetwork;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WebApplication8.Data.Context;
+using WebApplication8.Data.Repository;
+using WebApplication8.Data.UoW;
+using WebApplication8.Extentions;
 using WebApplication8.Models.Users;
 
 namespace WebApplication8
@@ -14,17 +17,6 @@ namespace WebApplication8
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            builder.Services.AddIdentity<User, IdentityRole>(opts => {
-                opts.Password.RequiredLength = 5;
-                opts.Password.RequireNonAlphanumeric = false;
-                opts.Password.RequireLowercase = false;
-                opts.Password.RequireUppercase = false;
-                opts.Password.RequireDigit = false;
-            })
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
-
             var mapperConfig = new MapperConfiguration((v) =>
             {
                 v.AddProfile(new MappingProfile());
@@ -33,6 +25,22 @@ namespace WebApplication8
             IMapper mapper = mapperConfig.CreateMapper();
 
             builder.Services.AddSingleton(mapper);
+            var connection = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services
+                .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection))
+                .AddCustomRepository<Friend, FriendsRepository>()
+                .AddCustomRepository<Message, MessageRepository>()
+                .AddTransient<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddIdentity<User, IdentityRole>(opts =>
+                {
+                    opts.Password.RequiredLength = 5;
+                    opts.Password.RequireNonAlphanumeric = false;
+                    opts.Password.RequireLowercase = false;
+                    opts.Password.RequireUppercase = false;
+                    opts.Password.RequireDigit = false;
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

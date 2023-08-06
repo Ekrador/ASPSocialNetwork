@@ -10,5 +10,6 @@ namespace WebApplication8.ViewModels.Account
         {
             User = user;
         }
+        public List<User> Friends { get; set; }
     }
 }
