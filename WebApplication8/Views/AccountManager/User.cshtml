@@ -53,9 +53,9 @@
                     @foreach (var user in @Model.Friends)
                     {
                         <div>
-                            
+                            <div class="mrgn center-align">
                                 <img src="@user.Image" class="ava" />
-                           
+                            </div>
                             <div class="mrgn center-align">
                                 @user.GetFullName()
                             </div>
