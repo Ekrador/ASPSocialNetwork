@@ -1,4 +1,7 @@
-﻿@model WebApplication8.ViewModels.Account.SearchViewModel;
+﻿@using Microsoft.AspNetCore.Identity;
+@using WebApplication8.Models.Users;
+@model WebApplication8.ViewModels.Account.SearchViewModel;
+@inject SignInManager<User> SignInManager
 
 <div class="block-reg background-white">
 
@@ -8,15 +11,21 @@
         @foreach (var user in @Model.UserList)
         {
             <div>
-                <label>@user.GetFullName()</label>
-                @if (!@user.IsFriendWithCurrent)
-                {
-                    <form asp-controller="AccountManager" asp-action="AddFriend" asp-route-id="@user.Id" method="post">
-                        <button type="submit" class="btn btn-sm btn-primary">
-                            Добавить в друзья
-                        </button>
-                    </form>
-                }
+                <a asp-action="Inspect" asp-route-id="@user.Id" method="get">
+                    <label>@user.GetFullName()</label>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        @if (!@user.IsFriendWithCurrent)
+                        {
+                            <form asp-controller="AccountManager" asp-action="AddFriend" asp-route-id="@user.Id" method="post">
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    Добавить в друзья
+                                </button>
+                            </form>
+                        }
+
+                    }
+                </a>
             </div>
         }
     }

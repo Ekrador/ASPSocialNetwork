@@ -17,7 +17,7 @@ namespace WebApplication8.Data.UoW
 
         public void Dispose()
         {
-
+            _appContext.Dispose();
         }
 
         public IRepository<TEntity> GetRepository<TEntity>(bool hasCustomRepository = true) where TEntity : class

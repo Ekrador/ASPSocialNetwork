@@ -14,6 +14,7 @@ namespace WebApplication8.ViewModels.Account
         public string LastName { get; set; }
 
         [Required]
+        [EmailAddress]
         [Display(Name = "Email")]
         public string EmailReg { get; set; }
 

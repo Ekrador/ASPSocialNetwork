@@ -8,11 +8,6 @@
 
         <div class="side">
             <img class="main-img" src="@Model.User.Image" />
-            <div class="center-align">
-                <form class="enter_submit" method="get" asp-controller="AccountManager" asp-action="Edit">
-                    <input class="enter_submit" type="submit" value="Редактировать" />
-                </form>
-            </div>
         </div>
 
 
@@ -45,7 +40,7 @@
                 @if (Model.Friends.Count == 0)
                 {
                     <div>
-                        <label> У вас пока нет друзей.</label>
+                        <label> У пользователя пока нет друзей.</label>
                     </div>
                 }
                 else
@@ -58,20 +53,6 @@
                             </div>
                             <div class="mrgn center-align">
                                 @user.GetFullName()
-                            </div>
-                            <div class="mrgn center-align">
-                                <form asp-controller="AccountManager" asp-action="DeleteFriend" asp-route-id="@user.Id" method="post">
-                                    <button type="submit" class="btn btn-sm btn-primary">
-                                        Удалить из друзей
-                                    </button>
-                                </form>
-                            </div>
-                            <div class="mrgn center-align">
-                                <form asp-controller="AccountManager" asp-action="Chat" asp-route-id="@user.Id" method="post">
-                                    <button type="submit" class="btn btn-sm btn-primary min-width-but">
-                                        Чат
-                                    </button>
-                                </form>
                             </div>
                         </div>
                     }
