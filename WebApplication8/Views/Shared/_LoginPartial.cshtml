@@ -3,10 +3,16 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
+<div style="float: left;
+     display: inline-block;
+     color: black;
+     text-align: center;
+     padding: 6px 16px;
+     font-size: 17px;">
     @if (SignInManager.IsSignedIn(User))
     {
-            <form class="form-inline" method="post" asp-controller="AccountManager" asp-action="Logout">
-        <button type="submit" class="nav-link btn btn-link text-dark"> Logout</button>
-            </form>
+        <form method="post" asp-controller="AccountManager" asp-action="Logout">
+            <button type="submit" class="nav-link btn btn-link text-dark"> Logout</button>
+        </form>
     }
-   
+</div>

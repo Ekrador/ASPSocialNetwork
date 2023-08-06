@@ -12,19 +12,13 @@ namespace WebApplication8.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private IUnitOfWork _unitOfWork;
-        private IMapper _mapper;
-        private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager,
-            SignInManager<User> signInManager, IMapper mapper, IUnitOfWork unitOfWork)
+        public HomeController(ILogger<HomeController> logger,
+            SignInManager<User> signInManager)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()

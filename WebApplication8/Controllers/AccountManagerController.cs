@@ -131,7 +131,7 @@ namespace WebApplication8.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("MyPage", "AccountManager");
                 }
                 else
                 {

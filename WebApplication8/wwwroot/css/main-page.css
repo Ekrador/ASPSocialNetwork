@@ -1,4 +1,4 @@
-﻿﻿.main {
+﻿.main {
     -ms-flex: 40%; /* IE10 */
     flex: 40%;
     padding: 20px;
@@ -11,7 +11,7 @@
     padding: 20px;
 }
 
-.roww {
+.row {
     display: -ms-flexbox; /* IE10 */
     display: flex;
     -ms-flex-wrap: wrap; /* IE10 */
@@ -88,13 +88,11 @@
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 60%;
-    max-width: 500px;
-    height: 10%;
+    width: 100%;
 }
 
 .main-img {
-    width: 60%;
+    width: 100%;
     max-width: 500px;
 }
 

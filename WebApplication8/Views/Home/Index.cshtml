@@ -10,7 +10,7 @@
 {
 }
 else{
-<div class="roww">
+<div class="row">
     <div class="side">
         <div class="center">
             Пользуйтесь нашей самой крутой соцсетью! Регистрируйтесь всего за 2 минуты, делитесь мыслями, находите новых друзей.
@@ -19,10 +19,10 @@ else{
     </div>
 
 
-    <div class="main">
-        <partial name="Login" model="Model.LoginView" />
-        <partial name="Register" model="Model.RegisterView" />
-    </div>
+        <div class="main">
+            <partial name="Login" model="@Model.LoginView" />
+            <partial name="Register" model="@Model.RegisterView" />
+        </div>
 
 </div>
 }
