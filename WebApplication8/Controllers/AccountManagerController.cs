@@ -7,6 +7,7 @@ using WebApplication8.Extentions;
 using WebApplication8.Models.Users;
 using WebApplication8.ViewModels.Account;
 using WebApplication8.Data.UoW;
+using WebApplication8.Data;
 
 namespace WebApplication8.Controllers
 {
@@ -270,6 +271,25 @@ namespace WebApplication8.Controllers
                 History = mess.OrderBy(x => x.Id).ToList(),
             };
             return View("Chat", model);
+        }
+
+        [Route("Generate")]
+        [HttpGet]
+        public async Task<IActionResult> Generate()
+        {
+
+            var usergen = new GenerateUsers();
+            var userlist = usergen.Populate(35);
+
+            foreach (var user in userlist)
+            {
+                var result = await _userManager.CreateAsync(user, "123456");
+
+                if (!result.Succeeded)
+                    continue;
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
