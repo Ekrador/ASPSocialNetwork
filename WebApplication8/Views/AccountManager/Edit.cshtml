@@ -33,7 +33,7 @@
         </div>
 
         <div class="mrgn">
-            <input asp-for="BirthDate" class="form-control date_control" />
+            <input asp-for="BirthDate" class="form-control date_control" id="birthdate" />
             <span asp-validation-for="BirthDate" class="text-danger"></span>
 
         </div>
@@ -65,4 +65,6 @@
             <input class="btn_submit" type="submit" value="Сохранить" />
         </div>
     </form>
+
+    <script src="~/js/BirthdateValidation.js"></script>
 </div>

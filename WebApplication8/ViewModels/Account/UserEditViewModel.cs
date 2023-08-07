@@ -18,7 +18,7 @@ namespace WebApplication8.ViewModels.Account
         public string LastName { get; set; }
 
         [EmailAddress]
-        [Display(Name = "Email", Prompt = "example.com")]
+        [Display(Name = "Email", Prompt = "example@example.com")]
         public string Email { get; set; }
 
         [DataType(DataType.Date)]

@@ -45,7 +45,7 @@ namespace ASPSocialNetwork.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("MyPage", "AccountManager");
                 }
                 else
                 {
