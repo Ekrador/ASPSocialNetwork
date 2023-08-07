@@ -154,10 +154,16 @@ namespace WebApplication8.Controllers
         private async Task<SearchViewModel> CreateSearch(string search)
         {
             var currentuser = User;
-
+            List<User> list = new();
             var result = await _userManager.GetUserAsync(currentuser);
-
-            var list = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().Contains(search.ToLower())).ToList();
+            if (string.IsNullOrEmpty(search))
+            {
+                list = _userManager.Users.AsEnumerable().ToList();
+            }
+            else
+            {
+                list = _userManager.Users.AsEnumerable().Where(x => x.GetFullName().Contains(search.ToLower())).ToList();
+            }
             var withfriend = await GetAllFriend();
 
             var data = new List<UserWithFriendExt>();
