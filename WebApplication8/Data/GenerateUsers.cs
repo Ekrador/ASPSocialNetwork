@@ -38,7 +38,7 @@ namespace WebApplication8.Data
                 };
 
                 item.UserName = item.Email;
-                item.Image = "https://thispersondoesnotexist.com/image";
+                item.Image = "https://thispersondoesnotexist.com/";
 
                 users.Add(item);
             }
