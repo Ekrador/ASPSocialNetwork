@@ -22,7 +22,7 @@ namespace WebApplication8.ViewModels.Account
 
         [Required(ErrorMessage = "Поле Email обязательно для заполнения")]
         [EmailAddress]
-        [Display(Name = "Email", Prompt = "example.com")]
+        [Display(Name = "Email", Prompt = "example@example.com")]
         public string EmailReg { get; set; }
 
         [DataType(DataType.Date)]
